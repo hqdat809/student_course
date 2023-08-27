@@ -1,0 +1,19 @@
+.CoursePage {
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 32px;
+    gap: 12px;
+  }
+
+  &__search {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__pagination {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

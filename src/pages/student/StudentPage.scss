@@ -1,0 +1,16 @@
+.StudentPage {
+  display: flex;
+  flex-direction: column;
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    gap: 12px;
+
+    &-left,
+    &-right {
+      display: flex;
+      gap: 8px;
+    }
+  }
+}

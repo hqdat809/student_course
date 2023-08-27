@@ -1,0 +1,113 @@
+.ProfilePage {
+  &__title {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+
+  &__info {
+    margin-bottom: 30px;
+  }
+  &__field {
+    display: flex;
+    padding: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    align-items: center;
+    line-height: 26px;
+
+    &:hover {
+      background-color: #ebebeb75;
+
+      & .ProfilePage__editIcon {
+        display: flex;
+      }
+    }
+  }
+
+  &__error {
+    color: red;
+  }
+
+  &__editing {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    &-action {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      &-confirm {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  &__content {
+    position: relative;
+  }
+
+  &__course-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 12px;
+  }
+
+  &__editField {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    padding: 4px 8px;
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &.Error-field {
+      border-color: red;
+    }
+  }
+
+  &__editIcon {
+    margin-left: 10px;
+    align-items: center;
+    color: #afafaf75;
+    font-size: 16px;
+    border-radius: 4px;
+    flex: 1;
+    justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    top: -50px;
+    right: 0;
+    cursor: pointer;
+
+    &:hover svg {
+      color: #000;
+    }
+  }
+
+  &__confirm {
+    margin-left: 10px;
+    display: none;
+    align-items: center;
+    color: #afafaf75;
+    font-size: 16px;
+    border-radius: 4px;
+    flex: 1;
+    justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    top: -50px;
+    right: 0;
+    cursor: pointer;
+  }
+
+  &__label {
+    min-width: 200px;
+    font-weight: bold;
+  }
+}

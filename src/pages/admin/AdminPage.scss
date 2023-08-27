@@ -1,0 +1,95 @@
+.AdminPage {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f3f6f8;
+  gap: 15px;
+  position: relative;
+
+  &__sidebar {
+    height: 100vh;
+    background-color: white;
+    min-width: 200px;
+    margin-left: 8px;
+    border-radius: 6px;
+    position: fixed;
+
+    &-user {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 16px;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    &-name {
+      font-weight: bold;
+    }
+
+    &-role {
+      color: #838a9e;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 200px;
+    margin-top: 16px;
+    margin-left: 232px;
+    margin-right: 16px;
+    border-radius: 6px;
+  }
+
+  &__outlet {
+    background-color: white;
+    padding: 16px;
+    border-radius: 6px;
+    // height: calc(100vh - 110px);
+    margin-bottom: 50px;
+  }
+
+  &__navbar {
+    padding: 16px 0;
+    min-height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-action {
+      height: 100%;
+    }
+
+    &-user {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      gap: 7px;
+      color: #838a9e;
+      cursor: pointer;
+
+      &-name {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    &-title {
+      font-weight: bold;
+      font-size: 18px;
+    }
+  }
+
+  .divider {
+    border-bottom: 1px solid #cccc;
+    padding: 16px;
+  }
+}
+
+.Navbar__menu-item {
+  min-width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  color: #555555 !important;
+}
