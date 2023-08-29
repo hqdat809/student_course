@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CourseCard from "../../components/course-card/CourseCard";
 import { ICourseResponse } from "../../interfaces/course-interface";
 import { TEnrollCourseRequest } from "../../interfaces/student-interface";
-import {
-  getCourseByPageAction,
-  getCoursesAction,
-} from "../../stores/actions/course-actions";
+import { getCourseByPageAction } from "../../stores/actions/course-actions";
 import { enrollCourseAction } from "../../stores/actions/student-actions";
 import { TRootState } from "../../stores/reducers";
 import "./CoursePage.scss";
@@ -27,11 +24,12 @@ const CoursePage = () => {
   const [searching, setSearching] = useState("");
 
   const handleDispatchGetCourses = () => {
+    console.log(pageNo);
     dispatch(
       getCourseByPageAction({
         pageNo: pageNo === 0 ? pageNo : pageNo - 1,
         pageSize: 12,
-        name: "",
+        name: searching,
       })
     );
   };
@@ -48,6 +46,7 @@ const CoursePage = () => {
     pageNum: number,
     pageSize: number
   ) => {
+    console.log(pageNum);
     setPageNo(pageNum);
     dispatch(
       getCourseByPageAction({ pageNo: pageNum - 1, pageSize, name: "" })
@@ -55,6 +54,7 @@ const CoursePage = () => {
   };
 
   const handleSearchCourse = (text: string) => {
+    setPageNo(1);
     setSearching(text);
     dispatch(getCourseByPageAction({ pageNo: 0, pageSize: 12, name: text }));
   };
@@ -62,14 +62,14 @@ const CoursePage = () => {
   const debounceSearch = _.debounce(handleSearchCourse, 300);
 
   useEffect(() => {
-    dispatch(getCourseByPageAction({ pageNo: pageNo, pageSize: 12, name: "" }));
+    handleDispatchGetCourses();
   }, []);
 
   useEffect(() => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-    }, 800);
+    }, 1000);
   }, [coursesData]);
 
   return (
@@ -106,7 +106,7 @@ const CoursePage = () => {
       </div>
       <div className="CoursePage__pagination">
         <Pagination
-          defaultCurrent={1}
+          current={pageNo}
           total={coursesData?.totalElements}
           showSizeChanger={false}
           pageSize={12}

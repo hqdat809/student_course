@@ -26,6 +26,7 @@ import {
   cancelCourseAction,
   updateStudentAction,
 } from "../../stores/actions/student-actions";
+import { toastSuccess } from "../../utils/notifications-utils";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -44,14 +45,21 @@ const ProfilePage = () => {
     address: Yup.string().required("Address is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
   });
+
+  const handleReloadAfterUpdate = () => {
+    // toastSuccess("Update profile success");
+    setTimeout(() => {
+      window.location.reload();
+    }, 800);
+  };
+
   const handleSubmit = (values: TUpdateStudentRequest, actions: any) => {
-    console.log(actions.dirty);
     const payload = {
       id: userData?.id || 0,
       ...values,
     };
-    dispatch(updateStudentAction(payload));
-    // actions.setValues(values);
+    dispatch(updateStudentAction(payload, handleReloadAfterUpdate));
+    actions.resetForm();
     setIsEdit(false);
   };
 
@@ -143,12 +151,13 @@ const ProfilePage = () => {
                         color="error"
                         onClick={() => {
                           setIsEdit(false);
-                          formikProps.setValues({
-                            name: userData?.name,
-                            age: userData?.age,
-                            address: userData?.address,
-                            email: userData?.email,
-                          });
+                          formikProps.resetForm();
+                          // formikProps.setValues({
+                          //   name: userData?.name,
+                          //   age: userData?.age,
+                          //   address: userData?.address,
+                          //   email: userData?.email,
+                          // });
                         }}
                       >
                         <CloseRoundedIcon />
@@ -159,7 +168,6 @@ const ProfilePage = () => {
                       className="ProfilePage__editIcon"
                       onClick={() => {
                         setIsEdit(true);
-                        console.log(userData);
                       }}
                     >
                       <EditRoundedIcon sx={{ width: "22px", height: "22px" }} />

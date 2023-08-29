@@ -1,7 +1,7 @@
-import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from "axios";
-import { EAuthToken, TSignInResponse } from "../interfaces/auth-interface";
-import { handleStorageToken } from "../utils/storage-utils";
+import axios, { AxiosRequestConfig } from "axios";
+import { EAuthToken } from "../interfaces/auth-interface";
 import { SIGNIN } from "../routes/paths";
+import { toastError } from "../utils/notifications-utils";
 
 const instance = axios.create({
   baseURL: "http://127.0.0.1:9090/api", // Replace with your API URL
@@ -100,19 +100,31 @@ const processQueue = (error: any, token: string) => {
 // };
 
 const refreshAccessToken = async () => {
-  const response = await axios
-    .create({
-      baseURL: "http://127.0.0.1:9090/api",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(
-          EAuthToken.REFRESH_TOKEN
-        )}`,
-      },
-    })
-    .post("/v1/auth/refresh", {
-      refreshToken: localStorage.getItem(EAuthToken.REFRESH_TOKEN),
-    });
-  return response.data;
+  try {
+    const response = await axios
+      .create({
+        baseURL: "http://127.0.0.1:9090/api",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            EAuthToken.REFRESH_TOKEN
+          )}`,
+        },
+      })
+      .post("/v1/auth/refresh", {
+        refreshToken: localStorage.getItem(EAuthToken.REFRESH_TOKEN),
+      });
+    return response.data;
+  } catch (error) {
+    localStorage.removeItem(EAuthToken.ACCESS_TOKEN);
+    localStorage.removeItem(EAuthToken.REFRESH_TOKEN);
+    localStorage.removeItem("persist:root");
+    if (
+      confirm("Your session has timed out and you have been logged off.") ===
+      true
+    ) {
+      window.location.href = SIGNIN;
+    }
+  }
 };
 
 instance.interceptors.request.use(requestHandler, (error) => {
